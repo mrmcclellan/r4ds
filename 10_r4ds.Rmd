@@ -589,5 +589,50 @@ smaller |>
   geom_freqpoly(aes(group = cut_number(carat, 5)))
 ```
 
+Visualize the distribution of carat, partitioned by price.
+
+```{r}
+
+smaller |>
+  ggplot(aes(x = cut_number(price, 10), y = carat))+
+  geom_boxplot()+
+  coord_flip()+
+  xlab("Price")
+
+```
+How does the price distribution of very large diamonds compare to small diamonds? Is it as you expect, or does it surprise you?
+
+```{r}
+
+smaller |>
+  ggplot(aes(x = carat, y = price))+
+  geom_boxplot(aes(group = cut_width(carat, 0.25)))
+
+large <- diamonds |>
+  filter(carat >= 3)
+
+vlarge <- diamonds |>
+  filter(carat >= 4)
+
+large |>
+  ggplot(aes(x = carat))+
+  geom_histogram()
 
 
+large |>
+  ggplot(aes(x = carat, y = price))+
+  geom_boxplot(aes(group = cut_width(carat, 0.5)))
+
+smaller |>
+  ggplot(aes(x = carat, y = price))+
+  geom_boxplot(aes(group = cut_width(carat, 0.5)))
+
+diamonds |>
+  ggplot(aes(x = price))+
+  geom_freqpoly(aes(color = cut, binwidth = 500))
+          
+```
+
+
+
+ 
